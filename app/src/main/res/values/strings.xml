@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GitHub Repositorios</string>
+    <string name="repository">Repositório</string>
+    <string name="github_url">https://api.github.com/search/repositories?q=</string>
+    <string name="not_connection_download_image_use">Não há conexão com a internet para baixar a imagem do usuário</string>
+    <string name="not_connection_search_repositories">Não há conexão com a internet para concluir a busca pos repositórios</string>
+    <string name="no_repositories_were_found_with_the_keyword">Nenhum repositório encontrado com a palavra chave: </string>
+    <string name="searching_repositories_with_keyword">Buscando repositórios com a palavra chave: </string>
+    <string name="avatar">image of user</string>
+    <string name="search">Search</string>
+    <string name="name">Nome</string>
+    <string name="description">Descrição</string>
+</resources>
