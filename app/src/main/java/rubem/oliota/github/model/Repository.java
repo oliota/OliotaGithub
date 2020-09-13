@@ -3,13 +3,12 @@ package rubem.oliota.github.model;
 import java.io.Serializable;
 
 public class Repository implements Serializable {
-
     private String name;
     private String owner;
     private String avatar_url;
     private String description;
 
-    public Repository(){
+    public Repository() {
 
     }
 
@@ -32,7 +31,7 @@ public class Repository implements Serializable {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    void setOwner(String owner) {
         this.owner = owner;
     }
 
@@ -40,7 +39,7 @@ public class Repository implements Serializable {
         return avatar_url;
     }
 
-    public void setAvatar_url(String avatar_url) {
+    void setAvatar_url(String avatar_url) {
         this.avatar_url = avatar_url;
     }
 

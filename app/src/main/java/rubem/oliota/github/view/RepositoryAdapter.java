@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import rubem.oliota.github.model.Repository;
 import rubem.oliota.github.R;
+import rubem.oliota.github.model.Repository;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.SimpleViewHolder> {
 
     private Context context;
     private ArrayList<Repository> list;
 
-     RepositoryAdapter(Context context, ArrayList<Repository> list) {
+    RepositoryAdapter(Context context, ArrayList<Repository> list) {
         this.context = context;
         this.list = list;
     }
@@ -41,8 +41,8 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Si
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 Intent intent=new Intent(context,RepositoryActivity.class);
-                intent.putExtra("repository",repository);
+                Intent intent = new Intent(context, RepositoryActivity.class);
+                intent.putExtra("repository", repository);
                 context.startActivity(intent);
             }
         });

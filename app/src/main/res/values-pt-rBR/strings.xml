@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">GitHub Repositorios</string>
+    <string name="repository">Repositório</string>
+    <string name="github_url">https://api.github.com/search/repositories?q=</string>
+    <string name="not_connection_download_image_use">Não há conexão com a internet para baixar a imagem do usuário</string>
+    <string name="not_connection_search_repositories">Não há conexão com a internet para concluir a busca por repositórios</string>
+    <string name="no_repositories_were_found_with_the_keyword">Nenhum repositório encontrado com a palavra chave: </string>
+    <string name="searching_public_repositories_from_github">Pesquisando repositórios públicos no github</string>
+    <string name="searching_repositories_with_keyword">Buscando repositórios com a palavra chave: </string>
+    <string name="avatar">Imagem do usuário</string>
+    <string name="search">Procurar</string>
+    <string name="name">Nome</string>
+    <string name="description">Descrição</string>
+    <string name="test_get_name_repository">OliotaGithub</string>
+    <string name="test_get_owner_repository">oliota</string>
+    <string name="test_get_avatar_repository">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
+    <string name="test_get_description_repository">Projeto mobile de exemplo, desenvolvido em Java no Android Studio</string>
+    <string name="test_set_name_repository">OliotaGithub</string>
+    <string name="test_set_owner_repository">oliota</string>
+    <string name="test_set_avatar_repository">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
+    <string name="test_set_description_repository">Projeto mobile de exemplo, desenvolvido em Java no Android Studio</string>
+    <string name="test_get_login_owner">oliota</string>
+    <string name="test_get_avatar_url_owner">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
+    <string name="test_set_login_owner">oliota</string>
+    <string name="test_set_avatar_url_owner">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
+</resources>
