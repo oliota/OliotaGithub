@@ -59,6 +59,15 @@ public class MainActivity extends AppCompatActivity implements OnGitHubTaskCompl
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!search.isIconified()) {
+            search.onActionViewCollapsed();
+            toggleActionBar(true);
+        } else
+            super.onBackPressed();
+    }
+
     public void initVars() {
         recyclerView = findViewById(R.id.rv_list);
     }
