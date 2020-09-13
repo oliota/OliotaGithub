@@ -7,19 +7,28 @@ public class Root {
     private boolean incomplete_results;
     private List<Item> items;
 
-    public int getTotal_count() {
+    Root() {
+    }
+
+    Root(int total_count, boolean incomplete_results, List<Item> items) {
+        this.total_count = total_count;
+        this.incomplete_results = incomplete_results;
+        this.items = items;
+    }
+
+    int getTotal_count() {
         return total_count;
     }
 
-    public void setTotal_count(int total_count) {
+    void setTotal_count(int total_count) {
         this.total_count = total_count;
     }
 
-    public boolean isIncomplete_results() {
+    boolean isIncomplete_results() {
         return incomplete_results;
     }
 
-    public void setIncomplete_results(boolean incomplete_results) {
+    void setIncomplete_results(boolean incomplete_results) {
         this.incomplete_results = incomplete_results;
     }
 

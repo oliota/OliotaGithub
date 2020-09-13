@@ -1,13 +1,27 @@
 <resources>
-    <string name="app_name">GitHub Repositorios</string>
-    <string name="repository">Repositório</string>
+    <string name="app_name">GitHub Repositories</string>
+    <string name="repository">Repositories</string>
     <string name="github_url">https://api.github.com/search/repositories?q=</string>
-    <string name="not_connection_download_image_use">Não há conexão com a internet para baixar a imagem do usuário</string>
-    <string name="not_connection_search_repositories">Não há conexão com a internet para concluir a busca pos repositórios</string>
-    <string name="no_repositories_were_found_with_the_keyword">Nenhum repositório encontrado com a palavra chave: </string>
-    <string name="searching_repositories_with_keyword">Buscando repositórios com a palavra chave: </string>
+    <string name="github_url_public_repositories" translatable="false">https://api.github.com/users/github/repos</string>
+    <string name="not_connection_download_image_use">There is no internet connection to download the user image</string>
+    <string name="not_connection_search_repositories">There is no internet connection to complete the search for repositories</string>
+    <string name="no_repositories_were_found_with_the_keyword">No repositories were found with the keyword: </string>
+    <string name="searching_public_repositories_from_github">Searching public repositories from github</string>
+    <string name="searching_repositories_with_keyword">Searching repositories with the keyword: </string>
     <string name="avatar">image of user</string>
     <string name="search">Search</string>
-    <string name="name">Nome</string>
-    <string name="description">Descrição</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="test_get_name_repository">OliotaGithub</string>
+    <string name="test_get_owner_repository">oliota</string>
+    <string name="test_get_avatar_repository">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
+    <string name="test_get_description_repository">Sample mobile project, developed in Java on Android Studio</string>
+    <string name="test_set_name_repository">OliotaGithub</string>
+    <string name="test_set_owner_repository">oliota</string>
+    <string name="test_set_avatar_repository">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
+    <string name="test_set_description_repository">Sample mobile project, developed in Java on Android Studioo</string>
+    <string name="test_get_login_owner">oliota</string>
+    <string name="test_get_avatar_url_owner">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
+    <string name="test_set_login_owner">oliota</string>
+    <string name="test_set_avatar_url_owner">https://avatars1.githubusercontent.com/u/6345052?s=60&amp;v=4t</string>
 </resources>

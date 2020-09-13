@@ -50,7 +50,7 @@ public class RepositoryActivity extends AppCompatActivity implements OnTaskCompl
     }
 
     private void renderLayout() {
-        if (AppUtils.isNetworkConnected(this))
+        if (AppUtils.isNetworkNotConnected(this))
             Toast.makeText(this, getString(R.string.not_connection_download_image_use), Toast.LENGTH_LONG).show();
         else {
             DownloadImageTask downloadImageTask = new DownloadImageTask();

@@ -14,30 +14,17 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import rubem.oliota.github.R;
-import rubem.oliota.github.model.Item;
 import rubem.oliota.github.model.Repository;
-import rubem.oliota.github.model.Root;
 import rubem.oliota.github.utils.AppUtils;
+import rubem.oliota.github.utils.interfaces.OnGitHubTaskCompleted;
 
-public class MainActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private ArrayList<Repository> repositories;
-    SearchView search;
+public class MainActivity extends AppCompatActivity implements OnGitHubTaskCompleted {
     private ProgressDialog statusDialog;
+    private RecyclerView recyclerView;
+    SearchView search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +32,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toggleActionBar(true);
         initVars();
+        callGithubApiPublicRepositories();
+
+    }
+
+    private void callGithubApiPublicRepositories() {
+        if (AppUtils.isNetworkNotConnected(MainActivity.this)) {
+            Toast.makeText(MainActivity.this, getString(R.string.not_connection_search_repositories), Toast.LENGTH_LONG).show();
+            return;
+        }
+        AppUtils.showDialog(this,
+                statusDialog = new ProgressDialog(this),
+                getString(R.string.searching_public_repositories_from_github));
+        AppUtils.CallGithubApiPublicRepositories(this, this);
     }
 
     @Override
@@ -59,15 +59,21 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initVars() {
+    public void initVars() {
         recyclerView = findViewById(R.id.rv_list);
     }
 
-    private void generateList() {
+    public void generateList(ArrayList<Repository> repositories) {
         if (recyclerView.getItemAnimator() != null)
             recyclerView.getItemAnimator().setChangeDuration(700);
         recyclerView.setAdapter(new RepositoryAdapter(this, repositories));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Clicou na liata", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -94,56 +100,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(final String query) {
 
-                if (AppUtils.isNetworkConnected(MainActivity.this)) {
+                if (AppUtils.isNetworkNotConnected(MainActivity.this)) {
                     Toast.makeText(MainActivity.this, getString(R.string.not_connection_search_repositories), Toast.LENGTH_LONG).show();
                     return true;
                 }
+                AppUtils.showDialog(
+                        MainActivity.this,
+                        statusDialog = new ProgressDialog(MainActivity.this),
+                        MainActivity.this.getString(R.string.searching_repositories_with_keyword) + query
+                );
 
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url(getString(R.string.github_url) + query)
-                        .build();
-                statusDialog = new ProgressDialog(MainActivity.this);
-                statusDialog.setMessage(getString(R.string.searching_repositories_with_keyword) + query);
-                statusDialog.setCancelable(true);
-                statusDialog.show();
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Request request, IOException e) {
-                        statusDialog.dismiss();
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(Response response) throws IOException {
-                        if (!response.isSuccessful()) {
-                            statusDialog.dismiss();
-                            throw new IOException("Erro " + response);
-                        } else {
-                            String r = response.body().string();
-                            ObjectMapper objectMapper = new ObjectMapper();
-                            objectMapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
-                            objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-                            final Root root = objectMapper.readValue(r, Root.class);
-                            repositories = new ArrayList<>();
-
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (root.getItems().size() == 0) {
-                                        Toast.makeText(MainActivity.this, getString(R.string.no_repositories_were_found_with_the_keyword)+query, Toast.LENGTH_LONG).show();
-
-                                    } else {
-                                        for (Item item : root.getItems())
-                                            repositories.add(new Repository(item.getName(), item.getOwner().getLogin(), item.getOwner().getAvatar_url(), item.getDescription()));
-                                        generateList();
-                                    }
-                                    statusDialog.dismiss();
-                                }
-                            });
-                        }
-                    }
-                });
+                AppUtils.CallGithubApiRepositoresSearch(
+                        MainActivity.this,
+                        query,
+                        MainActivity.this
+                );
                 search.onActionViewCollapsed();
                 toggleActionBar(true);
                 return true;
@@ -157,11 +128,37 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void toggleActionBar(boolean full) {
+    public void toggleActionBar(boolean full) {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(!full);
             getSupportActionBar().setHomeButtonEnabled(!full);
             getSupportActionBar().setDisplayShowTitleEnabled(full);
         }
+    }
+
+    @Override
+    public void onGitHubTaskCompleted(final ArrayList<Repository> repositories) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                generateList(repositories);
+                statusDialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onGitHubTaskCompleted(final ArrayList<Repository> repositories, final String query) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (repositories.size() == 0) {
+                    Toast.makeText(MainActivity.this, getString(R.string.no_repositories_were_found_with_the_keyword) + query, Toast.LENGTH_LONG).show();
+                }
+                generateList(repositories);
+                statusDialog.dismiss();
+            }
+        });
+
     }
 }
