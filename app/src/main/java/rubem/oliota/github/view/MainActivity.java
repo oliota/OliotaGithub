@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements OnGitHubTaskCompl
     }
 
     @Override
-    public void onBackPressed() { 
+    public void onBackPressed() {
         if (!search.isIconified()) {
             search.onActionViewCollapsed();
             toggleActionBar(true);
